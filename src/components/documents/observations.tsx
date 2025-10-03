@@ -1,7 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { useFormStatus } from 'react-dom';
+import { useEffect, useRef, useActionState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Observacion } from "@/lib/definitions";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +12,7 @@ import { findUserById } from '@/lib/data';
 import { User } from '@/lib/definitions';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Send } from 'lucide-react';
+import * as React from 'react';
 
 function SubmitButton() {
     const { pending } = useFormStatus();
@@ -43,7 +44,7 @@ function ObservationItem({ observation }: { observation: Observacion & { supervi
 }
 
 export default function Observations({ observations, documentId, canAddObservation, supervisorId }: { observations: Observacion[], documentId: number, canAddObservation: boolean, supervisorId: number }) {
-  const [state, dispatch] = useFormState(addObservation, undefined);
+  const [state, dispatch] = useActionState(addObservation, undefined);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const [observationsWithUsers, setObservationsWithUsers] = React.useState<(Observacion & { supervisor?: User })[]>([]);
